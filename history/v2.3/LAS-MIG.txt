@@ -1,0 +1,5 @@
+PiTV V2.3: ta bort YouTube och låt Hem använda fungerande Bakåt.
+Kopiera skriptet till Raspberry Pi och kör:
+bash ~/Downloads/fixa-pitv-hem-utan-youtube-v23.sh
+sudo reboot
+Öppna om mobilens fjärrkontroll i ny flik.
