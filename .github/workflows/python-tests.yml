@@ -1,0 +1,24 @@
+name: PiTV Python tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Static syntax checks
+        run: |
+          python -m py_compile src/pi/v3.0/server.py
+          python -m py_compile patches/v3.1/install-v31.py
+          python -m py_compile patches/v3.2/install-v32.py
+          bash -n installer/install-fresh-pi.sh
+          bash -n installer/check-all.sh
+      - name: API tests
+        run: python -m unittest discover -s tests -v
+      - name: Repository secret scan
+        run: python tools/security-scan.py
