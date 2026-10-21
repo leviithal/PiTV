@@ -1,0 +1,34 @@
+PiTV V3 – fem steg (V2.4 med Netflix/Disney+ lämnas orörd)
+
+1) Packa upp hela mappen PiTV-V3 till C:\PiTV-V3 på Windows.
+2) Windows PowerShell:
+   cd C:\PiTV-V3
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\skicka-till-pi.ps1 -PiIp 192.168.1.XX -PiUser pi
+   ssh pi@192.168.1.XX
+3) På Pi:n:
+   bash ~/pitv-v3-upload/Pi/install-v3.sh
+   sudo reboot
+4) Efter omstart på Pi:n:
+   bash ~/pi-tv-v3/check-v3.sh
+   bash ~/pi-tv-v3/show-connection.sh
+   Spara uppgifterna privat; skicka aldrig API-nyckeln i chatten.
+5) På Windows: Android Studio och SDK Platform 35 krävs EN GÅNG.
+   cd C:\PiTV-V3\Android
+   .\build-android.ps1
+   APK skapas: PiTV-Remote-installera-pa-Android.apk
+   Överför APK till telefonen och installera där.
+   I appen anger du Pi IP, API-nyckel och certifikatets SHA-256.
+
+När appen fungerar får du valfritt begränsa den gamla webbservern:
+   bash ~/pi-tv-v3/lockdown-v2.sh
+   sudo reboot
+
+Rulla tillbaka:
+   bash ~/pi-tv-v3/rollback-v3.sh
+   sudo reboot
+
+Fullständiga detaljer finns i README-START-HAR.md.
+
+VIKTIGT: Paketet innehåller Android-källkod och ett byggskript, men
+inte en färdigkompilerad APK. Android SDK finns inte i den här byggmiljön.
