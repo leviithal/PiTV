@@ -12,7 +12,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 HERE=Path(__file__).resolve().parents[1]
-spec=importlib.util.spec_from_file_location('pitv_server',HERE/'Pi/server.py')
+spec=importlib.util.spec_from_file_location('pitv_server',HERE/'src/pi/v3.0/server.py')
 mod=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 

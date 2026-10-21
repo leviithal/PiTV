@@ -6,7 +6,7 @@
 
 - Windows 10/11 med PowerShell, Android Studio och Android SDK Platform **35**.
 - JDK 21 (t.ex. Eclipse Temurin 21). **Gradle 8.11.1 ska inte köras med Java 25**. Din vanliga Android Studio kan fortfarande använda Java 25 i andra projekt. Se officiell Gradle-kompatibilitetsmatris.
-- Internet vid första Gradle-nedladdningen. Projektet använder AGP 8.8.2/Kotlin 2.0.21 och Gradle 8.11.1.
+- Internet vid första Gradle-nedladdningen. Projektet använder AGP 8.9.2/Kotlin 2.2.20 och Gradle 8.11.1.
 
 JDK 21 kan installeras med:
 

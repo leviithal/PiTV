@@ -2,10 +2,10 @@
 
 ```mermaid
 flowchart LR
- A[Android PiTV Remote<br/>Kotlin APK] -- TLS, port 8766<br/>Bearer + SHA256 certifikatpin --> B[Python HTTPS API V3]
+ A[Android PiTV Remote / Kotlin APK] -->|TLS 8766, Bearer och SHA256 certifikatpin| B[Python HTTPS API V3]
  B -- wtype/wlrctl --> C[labwc / Chromium i kiosk-läge]
  B -- wpctl --> D[PipeWire ljud]
- C --> E[PiTV startsida<br/>lokal V2 på 127.0.0.1:8765]
+ C --> E[PiTV startsida / V2 lokalt på port 8765]
  C --> F[Netflix webbspelare + Widevine]
  C --> G[Disney+ webbspelare + Widevine]
  H[Chromium extension] -- D-pad + Back + auto fullscreen --> C

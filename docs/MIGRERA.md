@@ -11,11 +11,13 @@ sudo reboot
 bash ~/pi-tv-v3/check-v3.sh
 ```
 
-Installationsskriptet kopierar server och hjälpskript men ska inte skriva över V2 Chromium-profilen. Bygg Android-appen enligt [ANDROID.md](ANDROID.md). Kontrollera anslutningen. Därefter kopierar du `patches/v3.1/install-v31.py`, `rollback-v31.sh` och `patches/v3.2/{install-v32.py,rollback-v32.py,pitv-auto-fullscreen.js}` till Pi:ns hemkatalog och installerar **i ordningen**:
+Installationsskriptet kopierar server och hjälpskript men ska inte skriva över V2 Chromium-profilen. Bygg Android-appen enligt [ANDROID.md](ANDROID.md). Kontrollera anslutningen. Därefter installerar du patcharna **i ordningen**. Om hela repot redan finns under `~/PiTV-GitHub`, kör:
 
 ```bash
-python3 ~/install-v31.py
-python3 ~/install-v32.py
+cp ~/PiTV-GitHub/patches/v3.1/rollback-v31.sh ~/
+cp ~/PiTV-GitHub/patches/v3.2/rollback-v32.py ~/
+python3 ~/PiTV-GitHub/patches/v3.1/install-v31.py
+python3 ~/PiTV-GitHub/patches/v3.2/install-v32.py
 sudo reboot
 ```
 

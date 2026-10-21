@@ -5,7 +5,7 @@
 
 ## Versionshistorik
 
-Den här repo-historiken innehåller koden från den första **PiTV Mini**-versionen till **PiTV V3.2**. De ursprungliga ändringsskripten är bevarade under `history/` och de relevanta källfilerna ligger under `src/` och `patches/`. Den samlade vägen för en helt ny Raspberry Pi ligger under `installer/`.
+**Historiken med commits och taggar är rekonstruerad från bevarade projektfiler i efterhand**, inte en export av den ursprungliga arbetsdatorns Git-logg. Den här repo-historiken innehåller koden från den första **PiTV Mini**-versionen till **PiTV V3.2**. De ursprungliga ändringsskripten är bevarade under `history/` och de relevanta källfilerna ligger under `src/` och `patches/`. Den samlade vägen för en helt ny Raspberry Pi ligger under `installer/`.
 
 | Version | Förbättring |
 | --- | --- |
@@ -40,6 +40,7 @@ Den här repo-historiken innehåller koden från den första **PiTV Mini**-versi
 | Felsökning | [Felsökning](docs/FELSOKNING.md) |
 | Lägg upp på GitHub med alla versions-taggar | [GitHub-publicering](docs/GITHUB.md) |
 | Systemöversikt | [Arkitektur](docs/ARKITEKTUR.md) |
+| Publicera bilder från installationen | [Skärmbilder](docs/SCREENSHOTS.md) |
 | Säkerhet | [Säkerhet](SECURITY.md) |
 
 ## Plattformar och krav
@@ -59,6 +60,7 @@ android/build-android-jdk21.ps1  Windowsbygg som tål & i sökvägar
 patches/v3.1/         Kiosk + Bakåt
 patches/v3.2/         Automatisk filmhelskärm
 installer/             Säker nyinstallation och kontroller
+tools/transfer-to-pi.ps1  SCP-överföring från Windows
 history/               Ursprungsfiler för varje release
 release-archives/      Arkiv från projektets utvecklingssteg
 .github/workflows/     Test på GitHub Actions
