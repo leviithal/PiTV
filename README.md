@@ -69,6 +69,6 @@ docs/                  Installation, felsökning, arkitektur, säkerhet
 
 ## Creditering och varumärken
 
-Projektet växte fram genom praktisk felsökning och testning på Raspberry Pi, med kod- och dokumentationshjälp från ChatGPT. Netflix och Disney+ tillhör respektive rättighetsinnehavare. **PiTV är inte anslutet till, godkänt av eller certifierat av streamingtjänsterna.** Ingen streamingmedia, inloggning eller DRM-nyckel ingår.
+Projektet växte fram genom praktisk felsökning och testning på Raspberry Pi, med kod- och dokumentations summering med hjälp av Lokal AI. Netflix och Disney+ tillhör respektive rättighetsinnehavare. **PiTV är inte anslutet till, godkänt av eller certifierat av streamingtjänsterna.** Ingen streamingmedia, inloggning eller DRM-nyckel ingår.
 
 Se [LICENSE-CHOICE.md](LICENSE-CHOICE.md) innan du publicerar med en öppen licens.
