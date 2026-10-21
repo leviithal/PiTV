@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title>PiTV • Fjärrkontroll</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#f8fafc;font-family:system-ui,Arial,sans-serif;touch-action:pan-y}main{max-width:520px;margin:auto;padding:18px 14px 38px}h1{font-size:27px;letter-spacing:-.04em;margin:5px 0}p{color:#9ba7bb;margin:0 0 16px;font-size:13px}.apps{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}button{border:1px solid #ffffff23;border-radius:16px;background:#232f47;color:#fff;padding:15px 6px;font:600 16px system-ui;min-height:56px;cursor:pointer;-webkit-tap-highlight-color:transparent}button:active{background:#514480}button.netflix{background:#82191b}button.disney{background:#174a9c}.navline{grid-template-columns:repeat(2,1fr)!important}.line{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.dpad{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,58px);gap:8px;max-width:290px;margin:18px auto}.dpad button{min-height:0;padding:6px;font-size:22px}.dpad .up{grid-column:2}.dpad .left{grid-column:1;grid-row:2}.dpad .ok{grid-column:2;grid-row:2;background:#543fb0}.dpad .right{grid-column:3;grid-row:2}.dpad .down{grid-column:2;grid-row:3}.touch{height:110px;background:linear-gradient(145deg,#1c2740,#141b2f);border:1px dashed #6f7f9c;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#aab8d1;touch-action:none;user-select:none;margin:10px 0}.small{font-size:12px;color:#9ba7bb;margin-top:12px}.search{display:flex;gap:8px;margin-top:10px}.search input{flex:1;min-width:0;border-radius:14px;border:1px solid #ffffff33;background:#151f34;padding:12px;font-size:16px;color:#fff}.search button{min-height:46px;font-size:14px}#status{font-size:12px;min-height:20px;color:#9be4be;margin:12px 0}
+.fallback{margin-top:20px;padding:12px;background:#171e32;border-radius:16px}.fallback summary{cursor:pointer;font-weight:600;padding:7px} .dpad button{font-size:28px}.dpad .ok{background:#694bcc}.apps button{font-size:17px}
+/* PiTV V2.4: Hem och Bakåt är alltid åtkomliga på mobilen. */
+main { padding-bottom: 112px !important; }
+.navline {
+  position: fixed !important;
+  bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(500px, calc(100% - 22px)) !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+  background: rgba(12,18,34,.97) !important;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.6);
+}
+.navline button { min-height: 58px !important; }
+.navline { grid-template-columns: 1fr !important; }
+</style></head><body><main>
+<h1>🎬 PiTV</h1><p>Styr TV:n med pilarna och OK. Musen finns som reserv.</p>
+
+<div class="line navline"><button data-a="back">↶ Bakåt</button></div>
+<div class="dpad"><button class="up" data-a="up">↑</button><button class="left" data-a="left">←</button><button class="ok" data-a="ok">OK</button><button class="right" data-a="right">→</button><button class="down" data-a="down">↓</button></div>
+<div class="line"><button data-a="volumedown">🔉 −</button><button data-a="space">⏯ Spela/pausa</button><button data-a="volumeup">🔊 +</button></div>
+<div class="line"><button data-a="mute">Tyst</button><button data-a="esc">Esc</button><button data-a="focus">◎ Visa val</button></div>
+<details class="fallback"><summary>Reservstyrning – muspekare och scroll</summary><p class="small">Använd bara om streamingtjänsten inte låter ett visst val styras med pilarna.</p><div class="touch" id="pad">Dra fingret här · tryck för att klicka</div><div class="line"><button data-a="scrollup">⇡ Scrolla</button><button data-a="click">🖱 Klick</button><button data-a="scrolldown">⇣ Scrolla</button></div></details>
+<div class="search"><input id="typed" placeholder="Sök eller skriv text …" autocomplete="off"/><button id="send">Skriv på TV</button></div>
+<div id="status">Redo • På Netflix/Disney+ syns en gul fokusram runt valet.</div>
+</main><script>
+const key=new URLSearchParams(location.search).get('key');
+const status=document.getElementById('status');
+let last=0;
+async function send(action,extra={}){try{const r=await fetch('/action?key='+encodeURIComponent(key),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...extra})});if(!r.ok){const e=await r.json().catch(()=>({error:r.status}));throw Error(e.error||'Fel '+r.status)}status.textContent='✓ '+action;status.style.color='#9be4be'}catch(e){status.textContent='Fel: '+e.message;status.style.color='#ffb4b4'}}
+document.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.a)));
+const pad=document.getElementById('pad');let origin=null,moved=false;
+pad.addEventListener('pointerdown',e=>{origin={x:e.clientX,y:e.clientY};moved=false;pad.setPointerCapture(e.pointerId)});
+pad.addEventListener('pointermove',e=>{if(!origin)return;const dx=Math.round((e.clientX-origin.x)*1.6),dy=Math.round((e.clientY-origin.y)*1.6);if(Math.abs(dx)+Math.abs(dy)<3)return;moved=true;if(Date.now()-last>45){send('move',{dx,dy});last=Date.now();origin={x:e.clientX,y:e.clientY}}});
+pad.addEventListener('pointerup',()=>{if(!moved)send('click');origin=null});
+pad.addEventListener('pointercancel',()=>{origin=null});
+document.getElementById('send').addEventListener('click',()=>{const i=document.getElementById('typed');if(i.value)send('type',{value:i.value})});
+</script></body></html>

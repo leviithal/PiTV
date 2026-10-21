@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "PiTV D-pad Navigation",
+  "version": "2.0.0",
+  "description": "Spatial focus navigation for Netflix, Disney+ and YouTube in PiTV.",
+  "content_scripts": [{
+    "matches": ["https://www.netflix.com/*", "https://*.netflix.com/*", "https://www.disneyplus.com/*", "https://*.disneyplus.com/*", "https://www.youtube.com/*"],
+    "js": ["navigation.js"],
+    "run_at": "document_idle",
+    "all_frames": false
+  }]
+}
