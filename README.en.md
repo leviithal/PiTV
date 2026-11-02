@@ -1,18 +1,20 @@
-# PiTV — Raspberry Pi 5 Smart TV with a native Android remote
+# PiTV – DIY Smart TV for Raspberry Pi 5
 
-PiTV is an open-source-ready portfolio project that reuses a Raspberry Pi 5 as a TV streaming interface. Netflix and Disney+ run through Chromium/Widevine on Raspberry Pi OS Desktop; a native Kotlin Android remote communicates with a Python HTTPS API (port 8766), using a local bearer token and a pinned TLS certificate.
+**Latest documented release: v3.3.1 Stable.** A Raspberry Pi OS Desktop + Chromium/Widevine-based streaming launcher, with a Kotlin Android remote and a local authenticated HTTPS API.
+
+The tested system plays Netflix and Disney+ through their **websites**, not official Android TV applications. PiTV is not a Chromecast, certified streaming device, or an affiliate of either service. Playback depends on current browsers, services, and DRM support.
 
 ## Features
-- Custom Netflix/Disney+ launcher, Chromium kiosk mode and D-pad navigation.
-- Dedicated Android APK with Back, OK, volume, playback controls and backup touchpad.
-- v3.1 browser-history Back avoids accidental 10-second Netflix rewind.
-- v3.2 experimental automatic video fullscreen.
-- Versioned sources from v1.0 through v3.2; backup and rollback scripts.
 
-## Documentation
-See [Swedish README](README.md) and the [fresh-install guide](docs/INSTALL-NY-PI.md), [Android build guide](docs/ANDROID.md), [architecture](docs/ARKITEKTUR.md), and [security](SECURITY.md).
+- Netflix/Disney+ two-tile TV launcher, kiosk mode, video fullscreen.
+- Native Android remote (D-pad, OK, browser-history Back, playback, volume and fallback mouse).
+- Python HTTPS API, local port 8766, token and pinned certificate fingerprint.
+- Browser extension with spatial navigation, Disney+ scrolling, and Netflix Play assist.
+- Chromium managed policy disabling Translate suggestions.
+- Self-contained fresh-install bundle (no intermediate patches), safe preflight, backups and rollback.
 
-## Limitations
-PiTV does **not** implement Google Cast, and is **not** affiliated with Netflix, Disney+, Google or Raspberry Pi. Streaming compatibility may change. Playback requires legitimate accounts, compatible DRM support and an appropriate network. This project does not distribute streaming content or credentials.
+**Compatibility status:** v3.3.1 Revised + Hotfix 1 was confirmed working on the original Raspberry Pi 5 on Nov 2, 2026. The consolidated new-install procedure has passed isolated tests but is not independently tested on a second Pi. Netflix and Disney+ can change their web layouts and DRM requirements.
 
-The Git commits and tags are **retrospectively reconstructed** from retained project artifacts, not recovered timestamps of the original development history. Real-hardware functionality was confirmed by the project owner; reproducibility on other systems is not guaranteed. The work was developed with AI assistance, with integration testing performed by the owner.
+Read [Swedish setup instructions](docs/INSTALL-V331-STABLE.md), [release notes](docs/RELEASE-331.md), [Android build guide](docs/ANDROID.md), and [security guidance](SECURITY.md).
+
+The historical version commits/tags were reconstructed from saved artifacts and are **not** an original development Git log. The repository contains no DRM keys, streaming content, account credentials, or live PiTV API tokens. Select an open-source license before inviting reuse.

@@ -21,9 +21,9 @@ SDK 35 installeras via **Android Studio → Tools → SDK Manager → SDK Platfo
 Öppna PowerShell i repo-mappen:
 
 ```powershell
-cd .ndroid
+cd .\android
 Set-ExecutionPolicy -Scope Process Bypass
-.uild-android-jdk21.ps1
+.\build-android-jdk21.ps1
 ```
 
 Byggskriptet söker JDK 21/17, inte en eventuellt inkompatibel Java 25. För Windows-konton med `&` eller mellanslag i sökvägen använder det tillfällig `SUBST`-enhet och städar efteråt.

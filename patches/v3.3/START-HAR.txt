@@ -1,0 +1,9 @@
+PiTV V3.3 releasekandidat
+
+1. Läs pitv-v33/README-SV.md.
+2. Från Windows: scp -r .\pitv-v33 pi@PI-IP:~/
+3. På Pi: python3 ~/pitv-v33/install-v33.py --check
+4. Om kontrollen är OK: python3 ~/pitv-v33/install-v33.py --install
+5. sudo reboot
+
+V3.2 sparas via backup. Android APK, server och Widevine ändras inte.

@@ -1,0 +1,16 @@
+'use strict';
+const assert=require('node:assert/strict');
+const nav=require('./navigation-core.js');
+const rect=(x,y,w=100,h=60)=>({left:x,top:y,width:w,height:h});
+const a={getBoundingClientRect:()=>rect(100,100)};
+const b={getBoundingClientRect:()=>rect(240,102)};
+const c={getBoundingClientRect:()=>rect(100,230)};
+const d={getBoundingClientRect:()=>rect(460,350)};
+assert.equal(nav.next([a,b,c,d],a,'ArrowRight'),b);
+assert.equal(nav.next([a,b,c,d],a,'ArrowDown'),c);
+assert.equal(nav.next([a,b,c,d],a,'ArrowLeft'),null);
+assert.equal(nav.next([a,b,c,d],a,'ArrowUp'),null);
+assert.equal(nav.next([a,b,c,d],a,'Delete'),null);
+assert.equal(nav.score(rect(0,0),rect(0,300),'ArrowRight'),null);
+assert.ok(nav.score(rect(0,0),rect(200,0),'ArrowRight') < nav.score(rect(0,0),rect(200,200),'ArrowRight'));
+console.log('OK – spatial-nav: 7 kontroller');

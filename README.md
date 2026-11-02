@@ -1,74 +1,71 @@
-# PiTV – Raspberry Pi 5 som Smart-TV, med egen Android-fjärrkontroll
+# PiTV – egen Smart-TV på Raspberry Pi 5
 
-> **Projektet har verifierats på en verklig Raspberry Pi 5 med Netflix och Disney+ i Chromium.** 
-> Ett hemmabyggt alternativ för den som redan har en Raspberry Pi, inte en officiell Chromecast eller certifierad streamingbox.
+**Senaste dokumenterade version: [PiTV v3.3.1 Stable](docs/RELEASE-331.md)** · Raspberry Pi OS Desktop · Chromium/Widevine · Native Android-fjärrkontroll · HTTPS
 
-## Versionshistorik
+En fungerande återanvändningslösning för en vanlig HDMI-TV, utan Chromecast eller ny streaminghårdvara. Projektet har vuxit fram genom praktiska tester på Raspberry Pi 5. Netflix/Disney+ är webbversioner; PiTV är **inte** officiellt stödd eller certifierad av tjänsterna.
 
-**Historiken med commits och taggar är rekonstruerad från bevarade projektfiler i efterhand**, inte en export av den ursprungliga arbetsdatorns Git-logg. Den här repo-historiken innehåller koden från den första **PiTV Mini**-versionen till **PiTV V3.2**. De ursprungliga ändringsskripten är bevarade under `history/` och de relevanta källfilerna ligger under `src/` och `patches/`. Den samlade vägen för en helt ny Raspberry Pi ligger under `installer/`.
+## Funktioner
 
-| Version | Förbättring |
+- **TV-startsida** med bara Netflix och Disney+ (ingen YouTube).
+- **Native Kotlin Android-app** med pilar, OK, Bakåt, volym, play/paus och reservmus.
+- **HTTPS API på port 8766** med egen nyckel och certifikatfingeravtryck, utan den gamla öppna V2 HTTP-fjärrkontrollen i en nyinstallation.
+- **Kiosk- och filmhelskärm**, Chromium-översättning avstängd via policy.
+- **Navigeringshjälp** för Netflix-filmer och Disney+-scrollning, med försiktig fallback; webbgränssnitt kan ändras.
+- **Säker installation och rollback** med backup. Nyinstallationen kräver inte att gamla reparationsskript körs i följd.
+
+**Verifieringsnivå:** V3.3.1 Reviderad + HF1 har fungerat på den ursprungliga Raspberry Pi:n enligt användarens tester den 2 november 2026. Den nya *konsoliderade* installeraren har automatiserade isolerade tester, men har ännu inte verifierats på en andra fysisk Raspberry Pi. Android-projektets källa har bevarats; en ny APK måste byggas/testas lokalt.
+
+## Installera
+
+| Scenario | Instruktion |
 | --- | --- |
-| v1.0 | PiTV Mini: webbfjärrkontroll och Raspberry Pi-startsida |
-| v2.0 | Första D-pad och TV-anpassade startsidan |
-| v2.1 | Korrigering av OK-knapp och fönsterfokus |
-| v2.2 | Förenklad öppning av Netflix/Disney+ och keyring-workaround |
-| v2.3 | Bort med YouTube och förenklad navigering |
-| v2.4 | Ny fjärrnyckel och städad mobilfjärr |
-| v3.0 | Native Android-app, HTTPS, separat autentiserat API |
-| v3.1 | Kiosk-läge och Bakåt genom Chromiums historik-API |
-| v3.2 | Experimentell, på den ursprungliga Pi:n fungerande automatisk filmhelskärm |
+| **Helt ny Raspberry Pi** | [Nyinstallation V3.3.1 Stable](docs/INSTALL-V331-STABLE.md) |
+| **Befintlig fungerande PiTV V3.3.1** | Ändra ingenting; säkerhetskopiera SD-kort och lokala filer före framtida uppdateringar |
+| Android-app från Windows | [Byggguide](docs/ANDROID.md) |
+| Historiska versioner | `history/`, `patches/` och `release-archives/` |
+| GitHub-release | [Publiceringsguide](docs/PUBLICERA-V331.md) |
+| Säkerhet | [SECURITY.md](SECURITY.md) |
 
-## Vad fungerar?
+Nyinstallation på Pi efter att Netflix/Disney+ spelat med bild + ljud i Chromium:
 
-- Netflix och Disney+ via **Chromium + Widevine** i Raspberry Pi OS Desktop.
-- Egen startsida med enbart Netflix och Disney+.
-- Native Android-fjärrkontroll (Kotlin), **inte** en inbäddad webbsida.
-- Styrkors, OK, Bakåt, volym, play/paus och reservmus.
-- HTTPS mot Pi:ns lokala port **8766**, med nyckel och certifikatets SHA-256-fingeravtryck.
-- Kiosk-läge och experimentell automatisk filmhelskärm.
-
-**Begränsningar:** Netflix och Disney+ kör fortfarande sina webbversioner. Funktionerna kan påverkas av DRM, ändringar på webbplatserna och olika skärmar. Vanliga Cast-knappen i apparna stöds inte av projektet. Den egna appen kontrollerar Pi:n, den tar inte emot officiella Google Cast-sessioner.
-
-## Snabbstart
-
-| Situation | Läs |
-| --- | --- |
-| Ny Raspberry Pi OS Desktop-installation | [Installera på ny Pi](docs/INSTALL-NY-PI.md) |
-| Fungerande äldre PiTV, vill uppgradera | [Migrera befintlig Pi](docs/MIGRERA.md) |
-| Windows + Android Studio | [Bygg och installera APK](docs/ANDROID.md) |
-| Felsökning | [Felsökning](docs/FELSOKNING.md) |
-| Lägg upp på GitHub med alla versions-taggar | [GitHub-publicering](docs/GITHUB.md) |
-| Systemöversikt | [Arkitektur](docs/ARKITEKTUR.md) |
-| Publicera bilder från installationen | [Skärmbilder](docs/SCREENSHOTS.md) |
-| Säkerhet | [Säkerhet](SECURITY.md) |
-
-## Plattformar och krav
-
-- **Pi:** Raspberry Pi 5, Raspberry Pi OS **Desktop 64-bit**, labwc/Wayland, Chromium, Widevine, HDMI och en fungerande uppkoppling.
-- **Mobil:** Android 8.0+ enligt Android-appens `minSdk = 26` (projektet har testats på en Android-telefon, inte på alla modeller).
-- **Windowsbygg:** Android Studio, SDK **Platform 35** (SDK 37 kan vara installerad parallellt), **JDK 21**, Gradle **8.11.1**.
-- **Nätverk:** Tillåt TCP 8766 mellan mobil och Pi. Håll porten borta från internet, använd ett betrott LAN/VLAN.
-
-## Repo-karta
-
-```text
-src/pi/v2.4/           Frysbild av installerade äldre PiTV-filer (utan nycklar)
-src/pi/v3.0/           PiTV HTTPS API, säkerhets-/driftskript, tester
-android/PiTVRemote/   Android-källkod (Kotlin)
-android/build-android-jdk21.ps1  Windowsbygg som tål & i sökvägar
-patches/v3.1/         Kiosk + Bakåt
-patches/v3.2/         Automatisk filmhelskärm
-installer/             Säker nyinstallation och kontroller
-tools/transfer-to-pi.ps1  SCP-överföring från Windows
-history/               Ursprungsfiler för varje release
-release-archives/      Arkiv från projektets utvecklingssteg
-.github/workflows/     Test på GitHub Actions
-docs/                  Installation, felsökning, arkitektur, säkerhet
+```bash
+python3 ~/PiTV-v3.3.1-Stable/installer/install-v331-stable.py --check
+python3 ~/PiTV-v3.3.1-Stable/installer/install-v331-stable.py --install
+sudo reboot
+python3 ~/pi-tv-v3/check.py
 ```
 
-## Creditering och varumärken
+**Kör aldrig den nya installeraren på en befintlig PiTV-installation.** Den vägrar som säkerhetsåtgärd att skriva över `~/pi-tv` eller `~/pi-tv-v3`.
 
-Projektet växte fram genom praktisk felsökning och testning på Raspberry Pi, med kod- och dokumentationshjälp från ChatGPT. Netflix och Disney+ tillhör respektive rättighetsinnehavare. **PiTV är inte anslutet till, godkänt av eller certifierat av streamingtjänsterna.** Ingen streamingmedia, inloggning eller DRM-nyckel ingår.
+## Arkitektur
 
-Se [LICENSE-CHOICE.md](LICENSE-CHOICE.md) innan du publicerar med en öppen licens.
+```text
+Android PiTV Remote (Kotlin, APK)
+             | HTTPS :8766 + Bearer token + cert fingerprint
+             v
+PiTV Python API (systemd user service)
+             | wtype / wlrctl / wpctl
+             v
+Chromium kiosk + D-pad extension + Widevine
+             |                     |
+       Netflix Web            Disney+ Web
+```
+
+Säkerhet: port 8766 är för ett **betrott lokalt nät**; portforwarda inte. Android-appen är ingen Cast-mottagare. Inga abonnemang, DRM-nycklar eller privata inloggningsuppgifter ingår.
+
+## Versionsresa
+
+| Version | Viktig milstolpe |
+| --- | --- |
+| v1.0–v2.4 | Prototyp, D-pad, autentisering, keyring/Netflix-felsökning, borttagning av YouTube |
+| v3.0 | Native Android, autentiserat HTTPS API |
+| v3.1 | Kiosk och webbläsarhistorik-Bakåt |
+| v3.2 | Automatisk filmhelskärm – tidigare stabil referens |
+| v3.3 | Experimentell navigation och fokus |
+| v3.3.1 Reviderad | Direktuppgradering från v3.2 och Disney/Netflix-förbättringar |
+| v3.3.1 HF1 | Netflix Play-fallback och Chromiums Translate-policy |
+| **v3.3.1 Stable** | Sammanhållen källkod och nyinstallationspaket |
+
+**Historiska Git-commits/taggar har rekonstruerats från bevarade filer och utgör inte en ursprunglig arbetslogg.** För fullständiga begränsningar: [release notes](docs/RELEASE-331.md) och [säkerhetsinformation](SECURITY.md).
+
+PiTV utvecklades genom praktisk felsökning och testning med kod- och dokumentationshjälp från ChatGPT. Netflix och Disney+ är respektive företags varumärken. Välj licens före öppen återanvändning: [LICENSE-CHOICE.md](LICENSE-CHOICE.md).

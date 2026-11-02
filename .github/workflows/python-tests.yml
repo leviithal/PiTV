@@ -14,10 +14,17 @@ jobs:
       - name: Static syntax checks
         run: |
           python -m py_compile src/pi/v3.0/server.py
+          python -m py_compile src/pi/v3.3.1-stable/server.py src/pi/v3.3.1-stable/check.py installer/install-v331-stable.py
           python -m py_compile patches/v3.1/install-v31.py
           python -m py_compile patches/v3.2/install-v32.py
           bash -n installer/install-fresh-pi.sh
           bash -n installer/check-all.sh
+          bash -n src/pi/v3.3.1-stable/start.sh
+          python -m json.tool src/pi/v3.3.1-stable/dpad-extension/manifest.json >/dev/null
+          python -m json.tool src/pi/v3.3.1-stable/chromium-policy.json >/dev/null
+      - name: JavaScript checks
+        run: |
+          for file in src/pi/v3.3.1-stable/dpad-extension/*.js; do node --check "$file"; done
       - name: API tests
         run: python -m unittest discover -s tests -v
       - name: Repository secret scan

@@ -35,3 +35,11 @@ Se **Git-taggarna v1.0 till v3.2** och mappen `history/` för källorna till var
 - Första PiTV Mini med startsida och HTTP/webbfjärr.
 
 *Dateringen är projektets dokumenterade samtal/tillkomst, inte officiella utgivningsdatum i någon appbutik.*
+
+## v3.3.1 Stable — consolidated release (2026-11-02)
+- Combines v3.3.1 Revised with Hotfix 1's `navigation.js` and Chromium `TranslateEnabled: false` policy.
+- Includes existing v3.1 browser-history Back, v3.2 auto film fullscreen, and native Android/HTTPS API without changing verified app logic.
+- Adds self-contained clean install for *new* Raspberry Pi 5 and non-destructive backup/rollback.
+- Fresh installs no longer require the v1/v2 HTTP remote and never place a URL token in a Chromium command line.
+- Adds tests, release notes and safeguards against overwriting an existing PiTV installation.
+- New-install end-to-end video test on a second Pi remains pending.

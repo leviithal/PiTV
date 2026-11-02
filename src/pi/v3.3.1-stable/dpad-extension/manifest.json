@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "PiTV D-pad Navigation",
+  "version": "2.3.1",
+  "description": "PiTV 3.3.1 Stable: spatial navigation, Disney scroll, Netflix Play assist, video fullscreen, browser back",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.netflix.com/*",
+        "https://*.netflix.com/*",
+        "https://www.disneyplus.com/*",
+        "https://*.disneyplus.com/*"
+      ],
+      "js": [
+        "navigation-core.js",
+        "navigation.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/*",
+        "https://www.disneyplus.com/*"
+      ],
+      "js": [
+        "pitv-auto-fullscreen.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "service_worker": "pitv-background.js"
+  },
+  "commands": {
+    "pitv-browser-back": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "PiTV: Browser Back"
+    }
+  }
+}
